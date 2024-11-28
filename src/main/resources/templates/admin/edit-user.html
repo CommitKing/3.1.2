@@ -15,23 +15,35 @@
             <legend>form:</legend>
             <br/>
             <input type="hidden" name="id" th:value="*{id}">
+
             <label for="username">1: </label>
             <input type="text" th:field="*{username}" id="username" placeholder="username"/>
+            <span th:errors="*{username}" class="error"></span>
             <br/>
+
             <label for="password">2: </label>
             <input type="password" th:field="*{password}" id="password" placeholder="password"/>
+            <span th:errors="*{password}" class="error"></span>
             <br/>
+
             <label for="email">3: </label>
             <input type="text" th:field="*{email}" id="email" placeholder="email"/>
+            <span th:errors="*{email}" class="error"></span>
             <br/>
+
             <label for="phoneNumber">4: </label>
             <input type="text" th:field="*{phoneNumber}" id="phoneNumber" placeholder="phoneNumber"/>
+            <span th:errors="*{phoneNumber}" class="error"></span>
             <br/>
+
             <label for="sex">5: </label>
             <input type="text" th:field="*{sex}" id="sex" placeholder="sex"/>
-            <br>
+            <span th:errors="*{sex}" class="error"></span>
+            <br/>
+
             <label for="age">6: </label>
             <input type="number" th:field="*{age}" id="age" placeholder="age"/>
+            <span th:errors="*{age}" class="error"></span>
             <br>
             <br>
             <div th:each="role : ${roles}">

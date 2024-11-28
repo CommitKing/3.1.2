@@ -17,7 +17,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -31,17 +30,17 @@ public class User {
     private int id;
 
     @NotNull(message = "Username cannot be null")
-    @Size(min = 5, max = 20)
+    @Size(min = 5, max = 20, message = "username length must be between 5 and 20")
     @Column(name = "username", unique = true)
     private String username;
 
     @NotNull(message = "Password cannot be null")
-    @Size(min = 5)
+    @Size(min = 5, message = "password length must be 5 and more")
     @Column(name = "password")
     private String password;
 
     @NotNull(message = "Email cannot be null")
-    @Email
+    @Email(message = "This email is not right")
     @Column(name = "email", unique = true)
     private String email;
 
@@ -83,6 +82,14 @@ public class User {
         }
     }
 
+    public boolean hasRole(String role) {
+        for (Role r : roles) {
+            if (r.getRoleName().equals(role)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     @Override
     public String toString() {

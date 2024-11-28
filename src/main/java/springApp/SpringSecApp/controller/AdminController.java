@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,6 +38,7 @@ public class AdminController {
 
     @GetMapping("/users-panel/add-user")
     public String addUser(Model model) {
+        model.addAttribute("user", new User());
         model.addAttribute("roles", roleService.getAllRoles());
         return "admin/add-user";
     }
@@ -49,13 +51,23 @@ public class AdminController {
     }
 
     @PostMapping("/users-panel/add-user")
-    public String addUser(@ModelAttribute("user") @Valid User user) {
+    public String addUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("user", user);
+            model.addAttribute("roles", roleService.getAllRoles());
+            return "admin/add-user";
+        }
         userService.saveUser(user);
         return "redirect:/admin/users-panel";
     }
 
     @PostMapping("/users-panel/edit-user")
-    public String editUser(@ModelAttribute("user") @Valid User user) {
+    public String editUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("user", user);
+            model.addAttribute("roles", roleService.getAllRoles());
+            return "admin/edit-user";
+        }
         userService.saveUser(user);
         return "redirect:/admin/users-panel";
     }
